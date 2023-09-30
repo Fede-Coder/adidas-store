@@ -1,3 +1,5 @@
 
 api/tmp/build-errors.log
 api/tmp/main.exe
+api/.env
+api/tmp/main.exe~

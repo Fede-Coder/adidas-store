@@ -10,9 +10,5 @@ func SetupRoutes(app *fiber.App) {
 
 	//Auths
 	api.Group("/auth").Route("/login", Login)
-
-	//Products
-	/*
-		api.Group("/product").Route("/", Product)
-	*/
+	api.Group("/auth").Route("/register", Register)
 }

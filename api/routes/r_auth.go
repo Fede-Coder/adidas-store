@@ -1,19 +1,15 @@
 package routes
 
-import "github.com/gofiber/fiber/v2"
+import (
+	c_auth "api/controllers/c_auth"
 
-type Person struct {
-	Name string `json:"name"`
-	Pass string `json:"pass"`
+	"github.com/gofiber/fiber/v2"
+)
+
+func Register(router fiber.Router) {
+	router.Post("/", c_auth.RegisterUser)
 }
 
 func Login(router fiber.Router) {
-	router.Post("/", func(c *fiber.Ctx) error {
-		/* p := new(Person)
-		if err := c.BodyParser(p); err != nil {
-			return err
-		}
-		return c.Send([]byte(p.Name)) */
-		return c.SendString("Testing")
-	})
+	router.Post("/", c_auth.LoginUser)
 }
