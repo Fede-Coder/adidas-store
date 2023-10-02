@@ -3,7 +3,6 @@ package cauth
 import (
 	"api/database"
 	"api/database/models"
-	"fmt"
 
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/crypto/bcrypt"
@@ -13,18 +12,17 @@ var RegisterUser = func(c *fiber.Ctx) error {
 	var data map[string]string
 
 	if err := c.BodyParser(&data); err != nil {
-		fmt.Println(err)
 		return err
 	}
 
-	if data["first_name"] == "" || data["last_name"] == "" || data["email"] == "" || data["password"] == "" {
+	if data["name"] == "" || data["last"] == "" || data["email"] == "" || data["password"] == "" || data["repeatPassword"] == "" {
 		c.Status(400)
 		return c.JSON(fiber.Map{
 			"message": "Name, Last, Email and Password are required.",
 		})
 	}
 
-	if data["password"] != data["confirm_password"] {
+	if data["password"] != data["repeatPassword"] {
 		c.Status(400)
 		return c.JSON(fiber.Map{
 			"message": "Password do not match!",
@@ -42,10 +40,10 @@ var RegisterUser = func(c *fiber.Ctx) error {
 	password, _ := bcrypt.GenerateFromPassword([]byte(data["password"]), 14)
 
 	user = models.User{
-		FirstName: data["first_name"],
-		LastName:  data["last_name"],
-		Email:     data["email"],
-		Password:  password,
+		Name:     data["name"],
+		Last:     data["last"],
+		Email:    data["email"],
+		Password: password,
 	}
 
 	database.DB.Create(&user)
@@ -59,5 +57,7 @@ var RegisterUser = func(c *fiber.Ctx) error {
 		})
 	} */
 
-	return c.JSON(user)
+	return c.JSON(fiber.Map{
+		"message": "User created.",
+	})
 }

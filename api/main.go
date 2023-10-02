@@ -12,20 +12,26 @@ import (
 
 func main() {
 
+	//Loading file .env
 	err := godotenv.Load()
 	if err != nil {
 		panic("Error loading .env file")
 	}
 
-	app := fiber.New()
 	// Initial connection database
 	database.Connect()
-	// Middleware
+
+	// Setup fiber
+	app := fiber.New()
 	app.Use(logger.New(), cors.New(cors.Config{
 		AllowCredentials: true,
+		AllowOrigins:     "http://localhost:3000",
+		AllowHeaders:     "Origin, X-Requested-With, Content-Type, Accept",
 	}))
+
 	// Setup routes
 	routes.SetupRoutes(app)
+
 	//Open server with port :3001
 	app.Listen(":3001")
 }

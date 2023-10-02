@@ -20,6 +20,9 @@ func Connect() {
 
 	DB = connection
 
+	//modelss := []interface{}{&models.User{}, &models.Session{}}
+	//connection.AutoMigrate(modelss...)
 	connection.AutoMigrate(&models.User{})
+	connection.AutoMigrate(&models.Session{})
 
 }

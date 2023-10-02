@@ -13,3 +13,7 @@ func Register(router fiber.Router) {
 func Login(router fiber.Router) {
 	router.Post("/", c_auth.LoginUser)
 }
+
+func Logout(router fiber.Router) {
+	router.Post("/", c_auth.LogoutUser)
+}
